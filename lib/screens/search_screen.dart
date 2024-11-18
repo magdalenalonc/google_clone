@@ -17,6 +17,8 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -26,9 +28,9 @@ class SearchScreen extends StatelessWidget {
             // web header
             const SearchHeader(),
             // tabs for news, images, ect
-            const Padding(
-              padding: EdgeInsets.only(left: 150.0),
-              child: SearchTabs(),
+            Padding(
+              padding: EdgeInsets.only(left: size.width <= 768 ? 10 : 150),
+              child: const SearchTabs(),
             ),
             const Divider(
               height: 0,
@@ -48,7 +50,10 @@ class SearchScreen extends StatelessWidget {
                     children: [
                       // showing the time it took to fetch results
                       Container(
-                        padding: const EdgeInsets.only(left: 150, top: 12),
+                        padding: EdgeInsets.only(
+                          left: size.width <= 768 ? 10 : 150,
+                          top: 12,
+                        ),
                         child: Text(
                           'About ${snapshot.data?['searchInformation']['formattedTotalResults']} results (${snapshot.data?['searchInformation']['formattedSearchTime']} seconds)',
                           style: const TextStyle(
@@ -63,7 +68,10 @@ class SearchScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.only(left: 150, top: 10),
+                            padding: EdgeInsets.only(
+                              left: size.width <= 768 ? 10: 150,
+                              top: 10,
+                            ),
                             child: SearchResultComponent(
                               description: snapshot.data?['items'][index]
                                   ['snippet'],
